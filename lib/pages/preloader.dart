@@ -1,4 +1,3 @@
-import 'package:dogapp/main.dart';
 import 'package:dogapp/pages/dog_breeds_page.dart';
 import 'package:flutter/material.dart';
 
@@ -7,22 +6,11 @@ import '../widgets/preloader_subtitle.dart';
 class Preloader extends StatelessWidget {
   const Preloader({super.key});
 
-  static bool isNavigated = false;
+  static Future? _navigation;
 
   @override
   Widget build(BuildContext context) {
-    if (!isNavigated) {
-      isNavigated = true;
-      Future.delayed(const Duration(seconds: 1), () {
-        if (context.mounted) {
-          Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const DogBreedsPage()),
-        );
-        }
-      });
-    }
+    _delayedNavigation(context);
 
     return Container(
         color: Colors.black,
@@ -30,18 +18,45 @@ class Preloader extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             Align(
-              alignment: FractionalOffset(0.5, 0.5),
+              alignment: const FractionalOffset(0.5, 0.5),
               child: Image.asset(
                 'assets/images/dog-poster.png',
                 height: 250,
               ),
             ),
-            Align(
-                alignment: FractionalOffset(0.5, 0.8),
-                child: const PreloaderSubtitle()),
+            const Align(
+              alignment: FractionalOffset(0.5, 0.8),
+              child: Hero(
+                tag: 'hero1',
+                child: PreloaderSubtitle(),
+              ),
+            ),
           ],
         ));
   }
+
+  void _delayedNavigation(BuildContext context) {
+    _navigation ??= Future.delayed(const Duration(seconds: 1), () {
+      if (context.mounted) {
+        Navigator.pushReplacement(
+          context,
+          MyAnimatedRouteBuilder(nextPage: const DogBreedsPage()),
+        );
+      }
+    });
+  }
 }
 
+class MyAnimatedRouteBuilder extends PageRouteBuilder {
+  final Widget nextPage;
 
+  MyAnimatedRouteBuilder({required this.nextPage})
+      : super(
+          pageBuilder: (context, animation, secondaryAnimation) => nextPage,
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+          transitionDuration: const Duration(milliseconds: 1000),
+          reverseTransitionDuration: const Duration(milliseconds: 1000),
+        );
+}

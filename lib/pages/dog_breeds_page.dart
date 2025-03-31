@@ -13,7 +13,7 @@ class DogBreedsPage extends StatefulWidget {
 class _DogBreedsPageState extends State<DogBreedsPage> {
   List<String> breeds = [];
 
-  String _capitalizeFirstLetter(String text) {
+  String _capitalizeFirstLetter(String text) { // todo extract
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1);
   }
@@ -26,8 +26,7 @@ class _DogBreedsPageState extends State<DogBreedsPage> {
 
   Future<void> fetchBreeds() async {
     try {
-      final response =
-          await http.get(Uri.parse('https://dog.ceo/api/breeds/list/all'));
+      final response = await http.get(Uri.parse('https://dog.ceo/api/breeds/list/all'));
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -52,12 +51,14 @@ class _DogBreedsPageState extends State<DogBreedsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: PreloaderSubtitle(),
+        title:  const Hero(
+          tag: 'hero1',
+          child: PreloaderSubtitle(),
+        ),
         actions: [
-          FloatingActionButton(
+          IconButton(
             onPressed: () {},
-            backgroundColor: Colors.grey,
-            child: Icon(
+            icon: const Icon(
               Icons.check_circle_outline,
               color: Colors.white,
               size: 40,
@@ -75,7 +76,7 @@ class _DogBreedsPageState extends State<DogBreedsPage> {
                 return ListTile(
                   title: Text(
                     _capitalizeFirstLetter(breeds[index]),
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 );
               },
