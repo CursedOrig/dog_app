@@ -1,3 +1,4 @@
+import 'package:dogapp/res/app_res.dart';
 import 'package:flutter/material.dart';
 
 class PreloaderSubtitle extends StatelessWidget {
@@ -5,35 +6,21 @@ class PreloaderSubtitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Text(
-            'Dog',
-            style: TextStyle(
-              color: Colors.red,
-              decoration: TextDecoration.none,
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Arial',
-            ),
-            textAlign: TextAlign.right,
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        children: <TextSpan>[
+          TextSpan(
+            text: AppTexts.dog,
+            style: AppTypo.headerL,
           ),
-        ),
-        Expanded(
-          child: Text(
-            'App',
-            style: TextStyle(
-              color: Colors.white,
-              decoration: TextDecoration.none,
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              fontFamily: 'Arial',
-            ),
+          TextSpan(
+            text: AppTexts.app,
+            style: AppTypo.headerL.copyWith(color: AppColors.accent1),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
+
