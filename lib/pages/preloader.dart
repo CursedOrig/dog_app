@@ -1,7 +1,7 @@
 import 'package:dogapp/pages/dog_breeds_page.dart';
+import 'package:dogapp/res/app_res.dart';
+import 'package:dogapp/widgets/preloader_subtitle.dart';
 import 'package:flutter/material.dart';
-
-import '../widgets/preloader_subtitle.dart';
 
 class Preloader extends StatelessWidget {
   const Preloader({super.key});
@@ -13,14 +13,14 @@ class Preloader extends StatelessWidget {
     _delayedNavigation(context);
 
     return Container(
-        color: Colors.black,
+        color: AppColors.mainBg,
         child: Stack(
           alignment: Alignment.center,
           children: [
             Align(
               alignment: const FractionalOffset(0.5, 0.5),
               child: Image.asset(
-                'assets/images/dog-poster.png',
+                AppImages.preloaderImg,
                 height: 250,
               ),
             ),

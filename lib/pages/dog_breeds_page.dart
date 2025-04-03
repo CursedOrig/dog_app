@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dogapp/res/app_res.dart';
 import 'package:dogapp/widgets/preloader_subtitle.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -13,7 +14,8 @@ class DogBreedsPage extends StatefulWidget {
 class _DogBreedsPageState extends State<DogBreedsPage> {
   List<String> breeds = [];
 
-  String _capitalizeFirstLetter(String text) { // todo extract
+  String _capitalizeFirstLetter(String text) {
+    // todo extract
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1);
   }
@@ -51,32 +53,43 @@ class _DogBreedsPageState extends State<DogBreedsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  const Hero(
-          tag: 'hero1',
-          child: PreloaderSubtitle(),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.check_circle_outline,
-              color: Colors.white,
-              size: 40,
+        title: Row(
+          children: [
+            const SizedBox(width: 44),
+            const Expanded(
+              child: Hero(
+                tag: 'hero1',
+                child: PreloaderSubtitle(),
+              ),
             ),
-          )
-        ],
-        backgroundColor: Colors.black,
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.check_circle_outline,
+                color: Colors.white,
+                size: 40,
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: AppColors.mainBg,
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.mainBg,
       body: breeds.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               itemCount: breeds.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  alignment: Alignment.centerLeft,
+                  height: 48,
+                  margin: const EdgeInsets.only(bottom: 12),
+                  decoration: AppDeco.mainDeco,
+                  child: Text(
                     _capitalizeFirstLetter(breeds[index]),
-                    style: const TextStyle(color: Colors.white),
+                    style: AppTypo.body1,
                   ),
                 );
               },

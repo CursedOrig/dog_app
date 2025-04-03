@@ -1,4 +1,5 @@
 import 'package:dogapp/pages/preloader.dart';
+import 'package:dogapp/res/app_res.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,8 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: AppFonts.comfortaa,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
