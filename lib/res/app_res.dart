@@ -11,3 +11,5 @@ part 'app_texts.dart';
 part 'app_typo.dart';
 
 part 'app_deco.dart';
+
+part 'app_btn_styles.dart';
