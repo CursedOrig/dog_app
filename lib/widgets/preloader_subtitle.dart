@@ -12,15 +12,14 @@ class PreloaderSubtitle extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
             text: AppTexts.dog,
-            style: AppTypo.headerL,
+            style: AppTypo.headerL.copyWith(fontWeight: FontWeight.w900),
           ),
           TextSpan(
             text: AppTexts.app,
-            style: AppTypo.headerL.copyWith(color: AppColors.accent1),
+            style: AppTypo.headerL.copyWith(fontWeight: FontWeight.w900, color: AppColors.accent1),
           ),
         ],
       ),
     );
   }
 }
-
