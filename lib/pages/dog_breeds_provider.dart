@@ -8,9 +8,8 @@ class DogBreedsProvider extends ChangeNotifier {
 
   Future<void> fetchBreeds() async {
     breeds.clear();
-    // try {
+    try {
 
-    // await Future.delayed(Duration(seconds: 2));
     final response = await http.get(Uri.parse('https://dog.ceo/api/breeds/list/all'));
 
     if (response.statusCode == 200) {
@@ -26,12 +25,12 @@ class DogBreedsProvider extends ChangeNotifier {
       breeds.addAll(result);
       notifyListeners();
     } else {
-      // breeds = ['Server error'];
+      breeds.add(BreedModel(breed: 'Server error', subBreeds: []));
       notifyListeners();
     }
-    // } catch (e) {
-    // breeds = ['No internet'];
+    } catch (e) {
+      breeds.add(BreedModel(breed: 'Server error', subBreeds: []));
     notifyListeners();
-    // }
+    }
   }
 }

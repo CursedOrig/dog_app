@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:dogapp/pages/dog_breeds_provider.dart';
+import 'package:dogapp/pages/dog_images_page.dart';
 import 'package:dogapp/res/app_res.dart';
 import 'package:dogapp/tools/extensions.dart';
 import 'package:dogapp/widgets/preloader_subtitle.dart';
@@ -71,7 +72,9 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
                     itemCount: breedProv.breeds.length,
                     itemBuilder: (context, index) {
                       final currentBreed = breedProv.breeds[index];
-                      controller.forward(); /// start anim
+                      controller.forward();
+
+                      /// start anim
 
                       return AnimatedBuilder(
                         animation: animation,
@@ -87,7 +90,7 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
                               margin: const EdgeInsets.only(bottom: 12),
                               decoration: AppDeco.mainDeco,
                               child: currentBreed.subBreeds.isEmpty
-                                  ? _BreedTile(title: currentBreed.breed)
+                                  ? _BreedTile(breed: currentBreed.breed)
                                   : ListTileTheme.merge(
                                       minVerticalPadding: 0,
                                       minTileHeight: 0,
@@ -99,8 +102,12 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
                                         childrenPadding: const EdgeInsets.only(left: 16),
                                         iconColor: AppColors.layer5,
                                         collapsedIconColor: AppColors.layer5,
-                                        title: _BreedTile(title: currentBreed.breed),
-                                        children: currentBreed.subBreeds.map((s) => _BreedTile(title: s)).toList(),
+                                        title: _BreedTile(breed: currentBreed.breed),
+                                        children: currentBreed.subBreeds
+                                            .map(
+                                              (sub) => _BreedTile(breed: currentBreed.breed, subBreed: sub),
+                                            )
+                                            .toList(),
                                       ),
                                     ),
                             ),
@@ -115,19 +122,29 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
 }
 
 class _BreedTile extends StatelessWidget {
-  const _BreedTile({required this.title});
+  const _BreedTile({required this.breed, this.subBreed});
 
-  final String title;
+  final String breed;
+  final String? subBreed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      // color: Colors.yellowAccent.withValues(alpha: 0.2),
-      height: 44,
-      child: Text(
-        title.capFirst,
-        style: AppTypo.body1.copyWith(color: AppColors.layer1),
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DogImagesPage(breed: breed, subBreed: subBreed),
+          ),
+        );
+      },
+      child: Container(
+        alignment: Alignment.centerLeft,
+        // color: Colors.yellowAccent.withValues(alpha: 0.2),
+        height: 44,
+        child: Text(
+          subBreed == null ? breed.capFirst : subBreed!.capFirst,
+          style: AppTypo.body1.copyWith(color: AppColors.layer1),
+        ),
       ),
     );
   }
