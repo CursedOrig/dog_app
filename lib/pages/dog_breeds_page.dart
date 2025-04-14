@@ -3,6 +3,7 @@ import 'package:dogapp/pages/dog_breeds_provider.dart';
 import 'package:dogapp/pages/dog_images_page.dart';
 import 'package:dogapp/res/app_res.dart';
 import 'package:dogapp/tools/extensions.dart';
+import 'package:dogapp/widgets/network_aware_widget.dart';
 import 'package:dogapp/widgets/preloader_subtitle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -41,81 +42,88 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) => DogBreedsProvider()..fetchBreeds(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Row(
-            children: [
-              const SizedBox(width: 44),
-              const Expanded(
-                child: Hero(
-                  tag: 'hero1',
-                  child: PreloaderSubtitle(),
+    final dogBP = DogBreedsProvider();
+
+    return NetworkAwareWidget(
+      onInternetConnected: () {
+        dogBP.noData ? dogBP.fetchBreeds() : () {};
+      },
+      child: ChangeNotifierProvider<DogBreedsProvider>(
+        create: (context) => dogBP..fetchBreeds(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Row(
+              children: [
+                const SizedBox(width: 44),
+                const Expanded(
+                  child: Hero(
+                    tag: 'hero1',
+                    child: PreloaderSubtitle(),
+                  ),
                 ),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.settings, size: 32),
-                style: AppBtnStyles.mainIconButtonStyle,
-              ),
-            ],
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.settings, size: 32),
+                  style: AppBtnStyles.mainIconButtonStyle,
+                ),
+              ],
+            ),
+            backgroundColor: AppColors.mainBg,
           ),
           backgroundColor: AppColors.mainBg,
-        ),
-        backgroundColor: AppColors.mainBg,
-        body: Consumer<DogBreedsProvider>(
-            builder: (context, breedProv, widget) => breedProv.breeds.isEmpty
-                ? const Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: breedProv.breeds.length,
-                    itemBuilder: (context, index) {
-                      final currentBreed = breedProv.breeds[index];
-                      controller.forward();
+          body: Consumer<DogBreedsProvider>(
+              builder: (context, breedProv, widget) => breedProv.breeds.isEmpty
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: breedProv.breeds.length,
+                      itemBuilder: (context, index) {
+                        final currentBreed = breedProv.breeds[index];
 
-                      /// start anim
+                        /// start animation
+                        controller.forward();
 
-                      return AnimatedBuilder(
-                        animation: animation,
-                        builder: (BuildContext context, Widget? child) {
-                          final animValue = animation.value * 3.0 - index / breedProv.breeds.length;
-                          final safeOpacityValue = min(max(animValue, 0.0), 1.0);
+                        return AnimatedBuilder(
+                          animation: animation,
+                          builder: (BuildContext context, Widget? child) {
+                            final animValue = animation.value * 3.0 - index / breedProv.breeds.length;
+                            final safeOpacityValue = min(max(animValue, 0.0), 1.0);
 
-                          return Opacity(
-                            opacity: safeOpacityValue,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              alignment: Alignment.centerLeft,
-                              margin: const EdgeInsets.only(bottom: 12),
-                              decoration: AppDeco.mainDeco,
-                              child: currentBreed.subBreeds.isEmpty
-                                  ? _BreedTile(breed: currentBreed.breed)
-                                  : ListTileTheme.merge(
-                                      minVerticalPadding: 0,
-                                      minTileHeight: 0,
-                                      child: ExpansionTile(
-                                        initiallyExpanded: false,
-                                        shape: LinearBorder.none,
-                                        collapsedShape: LinearBorder.none,
-                                        tilePadding: EdgeInsets.zero,
-                                        childrenPadding: const EdgeInsets.only(left: 16),
-                                        iconColor: AppColors.layer5,
-                                        collapsedIconColor: AppColors.layer5,
-                                        title: _BreedTile(breed: currentBreed.breed),
-                                        children: currentBreed.subBreeds
-                                            .map(
-                                              (sub) => _BreedTile(breed: currentBreed.breed, subBreed: sub),
-                                            )
-                                            .toList(),
+                            return Opacity(
+                              opacity: safeOpacityValue,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                alignment: Alignment.centerLeft,
+                                margin: const EdgeInsets.only(bottom: 12),
+                                decoration: AppDeco.mainDeco,
+                                child: currentBreed.subBreeds.isEmpty
+                                    ? _BreedTile(breed: currentBreed.breed)
+                                    : ListTileTheme.merge(
+                                        minVerticalPadding: 0,
+                                        minTileHeight: 0,
+                                        child: ExpansionTile(
+                                          initiallyExpanded: false,
+                                          shape: LinearBorder.none,
+                                          collapsedShape: LinearBorder.none,
+                                          tilePadding: EdgeInsets.zero,
+                                          childrenPadding: const EdgeInsets.only(left: 16),
+                                          iconColor: AppColors.layer5,
+                                          collapsedIconColor: AppColors.layer5,
+                                          title: _BreedTile(breed: currentBreed.breed),
+                                          children: currentBreed.subBreeds
+                                              .map(
+                                                (sub) => _BreedTile(breed: currentBreed.breed, subBreed: sub),
+                                              )
+                                              .toList(),
+                                        ),
                                       ),
-                                    ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  )),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    )),
+        ),
       ),
     );
   }
