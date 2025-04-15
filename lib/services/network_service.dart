@@ -9,11 +9,15 @@ abstract class NetworkService {
 
   static Future<bool> get isConnected async {
     final List<ConnectivityResult> result = await getConnectivityStatus();
-    final isConnected = !result.contains(ConnectivityResult.none);
-    return isConnected;
+    return result.isConnected;
   }
 
   static Stream<List<ConnectivityResult>> get onConnectivityChanged {
     return _connectivity.onConnectivityChanged;
   }
+}
+
+extension ConnectivityResultExtension on List<ConnectivityResult> {
+  bool get isConnected => !contains(ConnectivityResult.none);
+  bool get notConnected => contains(ConnectivityResult.none);
 }

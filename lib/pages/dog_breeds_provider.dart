@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'package:dogapp/Models/breed_model.dart';
 import 'package:dogapp/services/network_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import '../services/dog_api_client.dart';
 
 class DogBreedsProvider extends ChangeNotifier {
   final List<BreedModel> breeds = [];
@@ -15,24 +14,12 @@ class DogBreedsProvider extends ChangeNotifier {
     breeds.clear();
 
     try {
-      final response = await http.get(Uri.parse('https://dog.ceo/api/breeds/list/all')); // TODO server bad response
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final Map<String, dynamic> breedsMap = data['message'];
-
-        final result = breedsMap.entries.map((mapEntry) {
-          return BreedModel(
-            breed: mapEntry.key,
-            subBreeds: (mapEntry.value as List<dynamic>).map<String>((d) => d.toString()).toList(),
-          );
-        }).toList();
-        breeds.addAll(result);
-        notifyListeners();
-      } else {
-        // TODO server bad response
-        notifyListeners();
+      final result = await DogApiClient.fetchDogBreeds();
+      if (result == null) {
+        throw Exception('Bad result exception');
       }
+      breeds.addAll(result);
+      notifyListeners();
     } catch (e) {
       // TODO data fetch error
       notifyListeners();

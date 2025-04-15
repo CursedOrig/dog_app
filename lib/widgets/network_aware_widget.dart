@@ -31,7 +31,7 @@ class NetworkAwareWidgetState extends State<NetworkAwareWidget> {
   }
 
   void connectivityListener(List<ConnectivityResult> result) {
-    final currentConnectionStatus = !result.contains(ConnectivityResult.none);
+    final currentConnectionStatus = result.isConnected;
     setState(
       () {
         _isConnected = currentConnectionStatus;

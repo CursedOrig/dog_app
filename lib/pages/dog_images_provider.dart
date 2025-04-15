@@ -1,7 +1,6 @@
-import 'dart:convert';
+import 'package:dogapp/services/dog_api_client.dart';
 import 'package:dogapp/services/network_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class DogImagesProvider extends ChangeNotifier {
   DogImagesProvider({this.subBreed, required this.breed});
@@ -19,19 +18,12 @@ class DogImagesProvider extends ChangeNotifier {
 
     try {
       final String targetBreed = subBreed == null ? breed : '$breed/$subBreed';
-      final response =
-          await http.get(Uri.parse('https://dog.ceo/api/breed/$targetBreed/images')); // TODO server bad response
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final List<String> images = (data['message'] as List<dynamic>).map((d) => d.toString()).toList();
-
-        dogImages.addAll(images);
-        notifyListeners();
-      } else {
-        // TODO server bad response
-        notifyListeners();
+      final result = await DogApiClient.fetchDogImages(targetBreed);
+      if (result == null) {
+       throw Exception('Bad result exception');
       }
+      dogImages.addAll(result);
+      notifyListeners();
     } catch (e) {
       // TODO data fetch error
       notifyListeners();
