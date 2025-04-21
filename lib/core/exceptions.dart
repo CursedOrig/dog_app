@@ -1,0 +1,1 @@
+class BadServerResultException implements Exception{}

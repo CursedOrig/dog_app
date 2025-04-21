@@ -1,3 +1,4 @@
+import 'package:dogapp/core/exceptions.dart';
 import 'package:dogapp/services/dog_api_client.dart';
 import 'package:dogapp/services/network_service.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class DogImagesProvider extends ChangeNotifier {
   final String? subBreed;
   final List<String> dogImages = [];
   bool get noData => dogImages.isEmpty;
+  bool isError = false;
 
   Future<void> fetchImages() async {
     final isConnected = await NetworkService.isConnected;
@@ -20,12 +22,14 @@ class DogImagesProvider extends ChangeNotifier {
       final String targetBreed = subBreed == null ? breed : '$breed/$subBreed';
       final result = await DogApiClient.fetchDogImages(targetBreed);
       if (result == null) {
-       throw Exception('Bad result exception');
+        throw BadServerResultException();
       }
       dogImages.addAll(result);
       notifyListeners();
     } catch (e) {
-      // TODO data fetch error
+      if (e is BadServerResultException) {
+        isError = true;
+      }
       notifyListeners();
     }
   }

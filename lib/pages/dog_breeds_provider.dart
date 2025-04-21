@@ -1,7 +1,8 @@
 import 'package:dogapp/Models/breed_model.dart';
+import 'package:dogapp/core/exceptions.dart';
+import 'package:dogapp/services/dog_api_client.dart';
 import 'package:dogapp/services/network_service.dart';
 import 'package:flutter/material.dart';
-import '../services/dog_api_client.dart';
 
 class DogBreedsProvider extends ChangeNotifier {
   final List<BreedModel> breeds = [];
@@ -30,5 +31,3 @@ class DogBreedsProvider extends ChangeNotifier {
     }
   }
 }
-
-class BadServerResultException implements Exception{}

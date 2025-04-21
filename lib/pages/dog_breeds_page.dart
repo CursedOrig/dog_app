@@ -4,6 +4,7 @@ import 'package:dogapp/pages/dog_images_page.dart';
 import 'package:dogapp/res/app_res.dart';
 import 'package:dogapp/tools/extensions.dart';
 import 'package:dogapp/widgets/network_aware_widget.dart';
+import 'package:dogapp/widgets/on_error_snackbar.dart';
 import 'package:dogapp/widgets/preloader_subtitle.dart';
 import 'package:dogapp/widgets/shimming_loading_list.dart';
 import 'package:flutter/material.dart';
@@ -75,30 +76,7 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
           body: Consumer<DogBreedsProvider>(builder: (context, breedProv, widget) {
             if (breedProv.isError == true) {
               breedProv.isError == false;
-              void onError(Duration _) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    elevation: 0,
-                    content: Padding(
-                      padding: const EdgeInsets.all(32.0),
-                      child: Container(
-                        height: 44,
-                        alignment: Alignment.center,
-                        decoration: AppDeco.snackDeco,
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          'Server error',
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTypo.body1.copyWith(color: AppColors.mainBg),
-                        ),
-                      ),
-                    ),
-                    backgroundColor: Colors.transparent,
-                  ),
-                );
-              }
-
-              WidgetsBinding.instance.addPostFrameCallback(onError);
+              WidgetsBinding.instance.addPostFrameCallback(showOnErrorSnack(context));
             }
 
             return breedProv.breeds.isEmpty
