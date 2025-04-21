@@ -8,6 +8,7 @@ class DogBreedsProvider extends ChangeNotifier {
   bool get noData => breeds.isEmpty;
 
   Future<void> fetchBreeds() async {
+    await Future.delayed(const Duration(seconds: 1));
     final isConnected = await NetworkService.isConnected;
     if (!isConnected) return;
 

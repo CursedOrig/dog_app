@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:dogapp/Models/breed_model.dart';
 import 'package:http/http.dart' as http;
-import '../Models/breed_model.dart';
 
 abstract class DogApiClient {
   static Future<List<BreedModel>?> fetchDogBreeds() async {
@@ -8,13 +8,7 @@ abstract class DogApiClient {
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       final Map<String, dynamic> breedsData = data['message'];
-
-      final List<BreedModel> breeds = breedsData.entries.map((mapEntry) {
-        return BreedModel(
-          breed: mapEntry.key,
-          subBreeds: (mapEntry.value as List<dynamic>).map<String>((d) => d.toString()).toList(),
-        );
-      }).toList();
+      final List<BreedModel> breeds = BreedModel.fromJsonData(breedsData);
       return breeds;
     } else {
       return null;

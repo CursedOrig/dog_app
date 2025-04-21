@@ -5,6 +5,7 @@ import 'package:dogapp/res/app_res.dart';
 import 'package:dogapp/tools/extensions.dart';
 import 'package:dogapp/widgets/network_aware_widget.dart';
 import 'package:dogapp/widgets/preloader_subtitle.dart';
+import 'package:dogapp/widgets/shimming_loading_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -73,7 +74,7 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
           backgroundColor: AppColors.mainBg,
           body: Consumer<DogBreedsProvider>(
               builder: (context, breedProv, widget) => breedProv.breeds.isEmpty
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const ShimmingLoadingList()
                   : ListView.builder(
                       padding: const EdgeInsets.all(16),
                       itemCount: breedProv.breeds.length,
