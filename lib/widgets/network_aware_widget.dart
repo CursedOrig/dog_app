@@ -21,7 +21,7 @@ class NetworkAwareWidget extends StatefulWidget {
 class NetworkAwareWidgetState extends State<NetworkAwareWidget> {
   StreamSubscription<List<ConnectivityResult>>? _streamSubscription;
   bool _isConnected = false;
-  bool _isConnectedPrev = false;
+  bool? _isConnectedPrev;
 
   @override
   void initState() {
