@@ -7,4 +7,10 @@ class AppDeco {
     borderRadius: const BorderRadius.all(Radius.circular(16)),
     border: Border.all(color: AppColors.layer4),
   );
+
+  static var snackDeco = BoxDecoration(
+    color: AppColors.layer1,
+    borderRadius: const BorderRadius.all(Radius.circular(16)),
+    border: Border.all(color: AppColors.layer2),
+  );
 }

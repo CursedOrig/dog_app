@@ -6,6 +6,7 @@ import '../services/dog_api_client.dart';
 class DogBreedsProvider extends ChangeNotifier {
   final List<BreedModel> breeds = [];
   bool get noData => breeds.isEmpty;
+  bool isError = false;
 
   Future<void> fetchBreeds() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -17,13 +18,17 @@ class DogBreedsProvider extends ChangeNotifier {
     try {
       final result = await DogApiClient.fetchDogBreeds();
       if (result == null) {
-        throw Exception('Bad result exception');
+        throw BadServerResultException();
       }
       breeds.addAll(result);
       notifyListeners();
     } catch (e) {
-      // TODO data fetch error
+      if (e is BadServerResultException) {
+        isError = true;
+      }
       notifyListeners();
     }
   }
 }
+
+class BadServerResultException implements Exception{}

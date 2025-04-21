@@ -72,58 +72,87 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
             backgroundColor: AppColors.mainBg,
           ),
           backgroundColor: AppColors.mainBg,
-          body: Consumer<DogBreedsProvider>(
-              builder: (context, breedProv, widget) => breedProv.breeds.isEmpty
-                  ? const ShimmingLoadingList()
-                  : ListView.builder(
-                      padding: const EdgeInsets.all(16),
-                      itemCount: breedProv.breeds.length,
-                      itemBuilder: (context, index) {
-                        final currentBreed = breedProv.breeds[index];
+          body: Consumer<DogBreedsProvider>(builder: (context, breedProv, widget) {
+            if (breedProv.isError == true) {
+              breedProv.isError == false;
+              void onError(Duration _) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    elevation: 0,
+                    content: Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: Container(
+                        height: 44,
+                        alignment: Alignment.center,
+                        decoration: AppDeco.snackDeco,
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          'Server error',
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTypo.body1.copyWith(color: AppColors.mainBg),
+                        ),
+                      ),
+                    ),
+                    backgroundColor: Colors.transparent,
+                  ),
+                );
+              }
 
-                        /// start animation
-                        controller.forward();
+              WidgetsBinding.instance.addPostFrameCallback(onError);
+            }
 
-                        return AnimatedBuilder(
-                          animation: animation,
-                          builder: (BuildContext context, Widget? child) {
-                            final animValue = animation.value * 3.0 - index / breedProv.breeds.length;
-                            final safeOpacityValue = min(max(animValue, 0.0), 1.0);
+            return breedProv.breeds.isEmpty
+                ? const ShimmingLoadingList()
+                : ListView.builder(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: breedProv.breeds.length,
+                    itemBuilder: (context, index) {
+                      final currentBreed = breedProv.breeds[index];
 
-                            return Opacity(
-                              opacity: safeOpacityValue,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
-                                alignment: Alignment.centerLeft,
-                                margin: const EdgeInsets.only(bottom: 12),
-                                decoration: AppDeco.mainDeco,
-                                child: currentBreed.subBreeds.isEmpty
-                                    ? _BreedTile(breed: currentBreed.breed)
-                                    : ListTileTheme.merge(
-                                        minVerticalPadding: 0,
-                                        minTileHeight: 0,
-                                        child: ExpansionTile(
-                                          initiallyExpanded: false,
-                                          shape: LinearBorder.none,
-                                          collapsedShape: LinearBorder.none,
-                                          tilePadding: EdgeInsets.zero,
-                                          childrenPadding: const EdgeInsets.only(left: 16),
-                                          iconColor: AppColors.layer5,
-                                          collapsedIconColor: AppColors.layer5,
-                                          title: _BreedTile(breed: currentBreed.breed),
-                                          children: currentBreed.subBreeds
-                                              .map(
-                                                (sub) => _BreedTile(breed: currentBreed.breed, subBreed: sub),
-                                              )
-                                              .toList(),
-                                        ),
+                      /// start animation
+                      controller.forward();
+
+                      return AnimatedBuilder(
+                        animation: animation,
+                        builder: (BuildContext context, Widget? child) {
+                          final animValue = animation.value * 3.0 - index / breedProv.breeds.length;
+                          final safeOpacityValue = min(max(animValue, 0.0), 1.0);
+
+                          return Opacity(
+                            opacity: safeOpacityValue,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              alignment: Alignment.centerLeft,
+                              margin: const EdgeInsets.only(bottom: 12),
+                              decoration: AppDeco.mainDeco,
+                              child: currentBreed.subBreeds.isEmpty
+                                  ? _BreedTile(breed: currentBreed.breed)
+                                  : ListTileTheme.merge(
+                                      minVerticalPadding: 0,
+                                      minTileHeight: 0,
+                                      child: ExpansionTile(
+                                        initiallyExpanded: false,
+                                        shape: LinearBorder.none,
+                                        collapsedShape: LinearBorder.none,
+                                        tilePadding: EdgeInsets.zero,
+                                        childrenPadding: const EdgeInsets.only(left: 16),
+                                        iconColor: AppColors.layer5,
+                                        collapsedIconColor: AppColors.layer5,
+                                        title: _BreedTile(breed: currentBreed.breed),
+                                        children: currentBreed.subBreeds
+                                            .map(
+                                              (sub) => _BreedTile(breed: currentBreed.breed, subBreed: sub),
+                                            )
+                                            .toList(),
                                       ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    )),
+                                    ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+          }),
         ),
       ),
     );
