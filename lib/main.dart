@@ -1,21 +1,29 @@
 import 'package:dogapp/pages/preloader.dart';
 import 'package:dogapp/res/app_res.dart';
+import 'package:dogapp/tools/extensions.dart';
 import 'package:flutter/material.dart';
+import 'gen/strings.g.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
+  LocaleSettings.useDeviceLocale();
+
+  runApp(
+    TranslationProvider(
+      child: const DogApp()
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class DogApp extends StatelessWidget {
+  const DogApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: '${context.tt.dog}${context.tt.app}',
       theme: ThemeData(
         fontFamily: AppFonts.comfortaa,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

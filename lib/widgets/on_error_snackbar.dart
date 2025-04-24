@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:dogapp/res/app_res.dart';
+import 'package:dogapp/tools/extensions.dart';
 import 'package:flutter/material.dart';
 
 FrameCallback showOnErrorSnack(BuildContext context) {
@@ -14,7 +15,7 @@ FrameCallback showOnErrorSnack(BuildContext context) {
             decoration: AppDeco.snackDeco,
             padding: const EdgeInsets.all(8),
             child: Text(
-              AppTexts.serverError,
+              context.tt.serverError,
               overflow: TextOverflow.ellipsis,
               style: AppTypo.body1.copyWith(color: AppColors.mainBg),
             ),

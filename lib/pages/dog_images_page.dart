@@ -79,7 +79,7 @@ class DogImagesPage extends StatelessWidget {
                                     ),
                                     Center(
                                       child: OutlinedText(
-                                        text: AppTexts.errorLoadingImage,
+                                        text: context.tt.errorLoadingImage,
                                         textColor: AppColors.mainBg,
                                         borderColor: AppColors.layer1,
                                       ),

@@ -1,4 +1,5 @@
 import 'package:dogapp/res/app_res.dart';
+import 'package:dogapp/tools/extensions.dart';
 import 'package:flutter/material.dart';
 
 class PreloaderSubtitle extends StatelessWidget {
@@ -11,11 +12,11 @@ class PreloaderSubtitle extends StatelessWidget {
       text: TextSpan(
         children: <TextSpan>[
           TextSpan(
-            text: AppTexts.dog,
+            text: context.tt.dog,
             style: AppTypo.headerL.copyWith(fontWeight: FontWeight.w900),
           ),
           TextSpan(
-            text: AppTexts.app,
+            text: context.tt.app,
             style: AppTypo.headerL.copyWith(fontWeight: FontWeight.w900, color: AppColors.accent1),
           ),
         ],

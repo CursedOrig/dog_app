@@ -18,6 +18,14 @@ class AppTypo {
     fontSize: 28,
   );
 
+  static final headerM = _coreStyleComfortaa.copyWith(
+    fontSize: 24,
+  );
+
+  static final headerS = _coreStyleComfortaa.copyWith(
+    fontSize: 20,
+  );
+
   static final body1 = _coreStyleComfortaa.copyWith(
     fontSize: 18,
   );

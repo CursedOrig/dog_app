@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dogapp/res/app_res.dart';
 import 'package:dogapp/services/network_service.dart';
+import 'package:dogapp/tools/extensions.dart';
 import 'package:flutter/material.dart';
 
 class NetworkAwareWidget extends StatefulWidget {
@@ -72,7 +73,7 @@ class NetworkAwareWidgetState extends State<NetworkAwareWidget> {
               margin: const EdgeInsets.all(44),
               decoration: AppDeco.mainDeco,
               child: Text(
-                AppTexts.noInternetMessage,
+                context.tt.noInternetMessage,
                 textAlign: TextAlign.center,
                 style: AppTypo.body1,
               ),

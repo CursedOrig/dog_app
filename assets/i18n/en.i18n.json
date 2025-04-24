@@ -1,0 +1,14 @@
+{
+  "dog": "Dog",
+  "app": "App",
+  "errorLoadingImage": "Error loading image",
+  "noInternetMessage": "No Internet connection. Please check your connection",
+  "serverError": "Server error",
+  "settingsPage": {
+    "settings": "Settings",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
+    "shareApp": "Share App",
+    "rateApp": "Rate App"
+  }
+}

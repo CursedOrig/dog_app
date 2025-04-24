@@ -23,14 +23,14 @@ class PrivacyTermsPage extends StatelessWidget {
               icon: const Icon(Icons.arrow_back, size: 32),
               style: AppBtnStyles.mainIconButtonStyle,
             ),
+            const SizedBox(width: 8),
             Expanded(
               child: Text(
                 title,
                 textAlign: TextAlign.center,
-                style: AppTypo.headerL.copyWith(fontWeight: FontWeight.w900),
+                style: AppTypo.headerM.copyWith(fontWeight: FontWeight.w900),
               ),
             ),
-            const SizedBox(width: 44),
           ],
         ),
       ),

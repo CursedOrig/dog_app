@@ -1,6 +1,7 @@
 import 'package:dogapp/pages/privacy_terms_page.dart';
+import 'package:dogapp/res/app_res.dart';
+import 'package:dogapp/tools/extensions.dart';
 import 'package:flutter/material.dart';
-import '../res/app_res.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -22,7 +23,7 @@ class SettingsPage extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                AppTexts.settings,
+                context.tt.settingsPage.settings,
                 textAlign: TextAlign.center,
                 style: AppTypo.headerL.copyWith(fontWeight: FontWeight.w900),
               ),
@@ -35,12 +36,12 @@ class SettingsPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         children: [
           SettingsItemsWidget(
-            label: AppTexts.termsOfUse,
+            label: context.tt.settingsPage.termsOfUse,
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => PrivacyTermsPage(
-                    title: AppTexts.termsOfUse,
+                    title: context.tt.settingsPage.termsOfUse,
                     content: List.generate(150, (index) {
                       return 'Terms of Use $index';
                     }).join(),
@@ -51,12 +52,12 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           SettingsItemsWidget(
-            label: AppTexts.privacyPolicy,
+            label: context.tt.settingsPage.privacyPolicy,
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => PrivacyTermsPage(
-                    title: AppTexts.privacyPolicy,
+                    title: context.tt.settingsPage.privacyPolicy,
                     content: List.generate(150, (index) {
                       return 'Privacy Policy $index';
                     }).join(),
@@ -67,12 +68,12 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           SettingsItemsWidget(
-            label: AppTexts.shareApp,
+            label: context.tt.settingsPage.shareApp,
             onTap: () {},
           ),
           const SizedBox(height: 12),
           SettingsItemsWidget(
-            label: AppTexts.rateApp,
+            label: context.tt.settingsPage.rateApp,
             onTap: () {},
           ),
         ],
@@ -103,6 +104,7 @@ class SettingsItemsWidget extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: Text(
           label,
+          overflow: TextOverflow.ellipsis,
           style: AppTypo.body1.copyWith(color: AppColors.layer1),
         ),
       ),
