@@ -72,7 +72,7 @@ class NetworkAwareWidgetState extends State<NetworkAwareWidget> {
               margin: const EdgeInsets.all(44),
               decoration: AppDeco.mainDeco,
               child: Text(
-                'Нет подключения к интернету. Пожалуйста, проверьте ваше соединение.',
+                AppTexts.noInternetMessage,
                 textAlign: TextAlign.center,
                 style: AppTypo.body1,
               ),

@@ -14,7 +14,7 @@ FrameCallback showOnErrorSnack(BuildContext context) {
             decoration: AppDeco.snackDeco,
             padding: const EdgeInsets.all(8),
             child: Text(
-              'Server error',
+              AppTexts.serverError,
               overflow: TextOverflow.ellipsis,
               style: AppTypo.body1.copyWith(color: AppColors.mainBg),
             ),

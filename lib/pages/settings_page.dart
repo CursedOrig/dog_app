@@ -1,6 +1,5 @@
 import 'package:dogapp/pages/privacy_terms_page.dart';
 import 'package:flutter/material.dart';
-
 import '../res/app_res.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -23,7 +22,7 @@ class SettingsPage extends StatelessWidget {
             ),
             Expanded(
               child: Text(
-                'Settings',
+                AppTexts.settings,
                 textAlign: TextAlign.center,
                 style: AppTypo.headerL.copyWith(fontWeight: FontWeight.w900),
               ),
@@ -36,13 +35,15 @@ class SettingsPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         children: [
           SettingsItemsWidget(
-            label: 'Terms of Use',
+            label: AppTexts.termsOfUse,
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => PrivacyTermsPage(
-                    title: 'Terms of Use',
-                    content: List.generate(150, (index) {return 'Terms of Use $index';}).join(),
+                    title: AppTexts.termsOfUse,
+                    content: List.generate(150, (index) {
+                      return 'Terms of Use $index';
+                    }).join(),
                   ),
                 ),
               );
@@ -50,13 +51,15 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           SettingsItemsWidget(
-            label: 'Privacy Policy',
+            label: AppTexts.privacyPolicy,
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => PrivacyTermsPage(
-                    title: 'Privacy Policy',
-                    content: List.generate(150, (index) {return 'Privacy Policy $index';}).join(),
+                    title: AppTexts.privacyPolicy,
+                    content: List.generate(150, (index) {
+                      return 'Privacy Policy $index';
+                    }).join(),
                   ),
                 ),
               );
@@ -64,12 +67,12 @@ class SettingsPage extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           SettingsItemsWidget(
-            label: 'Share App',
+            label: AppTexts.shareApp,
             onTap: () {},
           ),
           const SizedBox(height: 12),
           SettingsItemsWidget(
-            label: 'Rate App',
+            label: AppTexts.rateApp,
             onTap: () {},
           ),
         ],

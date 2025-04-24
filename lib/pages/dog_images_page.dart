@@ -77,9 +77,9 @@ class DogImagesPage extends StatelessWidget {
                                       AppImages.preloaderImg,
                                       height: 250,
                                     ),
-                                    const Center(
+                                    Center(
                                       child: OutlinedText(
-                                        text: 'Error loading image',
+                                        text: AppTexts.errorLoadingImage,
                                         textColor: AppColors.mainBg,
                                         borderColor: AppColors.layer1,
                                       ),
