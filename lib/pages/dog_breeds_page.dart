@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:dogapp/pages/dog_breeds_provider.dart';
 import 'package:dogapp/pages/dog_images_page.dart';
+import 'package:dogapp/pages/settings_page.dart';
 import 'package:dogapp/res/app_res.dart';
 import 'package:dogapp/tools/extensions.dart';
 import 'package:dogapp/widgets/network_aware_widget.dart';
@@ -64,7 +65,14 @@ class _DogBreedsPageState extends State<DogBreedsPage> with SingleTickerProvider
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SettingsPage(),
+                      ),
+                    );
+                  },
                   icon: const Icon(Icons.settings, size: 32),
                   style: AppBtnStyles.mainIconButtonStyle,
                 ),

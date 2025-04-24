@@ -4,6 +4,7 @@ class AppDeco {
   AppDeco._();
 
   static var mainDeco = BoxDecoration(
+    color: AppColors.layer2,
     borderRadius: const BorderRadius.all(Radius.circular(16)),
     border: Border.all(color: AppColors.layer4),
   );
